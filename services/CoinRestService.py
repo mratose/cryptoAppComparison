@@ -8,7 +8,9 @@ import utility.Constant as Constant
 class CoinRestService:
     def getCoin(self, base, quote):
 
-        resp = requests.get(Constant.historicalAPI+'/{}/{}/latest?period_id=2YRS'.format(base, quote),
+        #url = f'https://rest.coinapi.io/v1/ohlcv/{base}/{quote}/history?period_id=2YRS&time_start=2016-01-01T00:00:00'
+        url = Constant.historicalAPI+'/{}/{}/latest?period_id=1MIN&time_start=2016-01-01T00:00:00'.format(base, quote)
+        resp = requests.get(url,
                             headers=
                             {
                                 'Content-Type': 'application/json',

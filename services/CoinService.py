@@ -14,7 +14,7 @@ try:
 
         cryptsCursor = coinCryptData.getallcrypt()
         for crypt in cryptsCursor:
-            quote = {crypt[0]}
+            quote = crypt[0]
             resp = coinRestService.getCoin(base, quote)
             coinCryptData.addcoinhistory(resp, base, quote)
 

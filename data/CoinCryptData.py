@@ -19,12 +19,10 @@ class CoinCryptData:
             cursor = connection.cursor()
             cointIemParams = []
 
-
-
-            query = "INSERT INTO coin_btc (" \
+            query = "INSERT INTO at_ohlcv_history (" \
                     "time_period_start, time_period_end, time_open, time_close,price_open," \
                     "price_high,price_low,price_close,volume_traded,trades_count,base,quotes) " \
-                    "VALUES (%s, %s, %s,%s, %s, %s,%s,%s, %s, %s)"
+                    "VALUES (%s, %s, %s,%s, %s, %s,%s,%s, %s, %s, %s, %s)"
 
             for coinItem in resp.json():
                 cointIemParams.append(
@@ -54,7 +52,7 @@ class CoinCryptData:
         except (Exception, psycopg2.Error) as error:
             print("Error while connecting to PostgreSQL", error)
         finally:
-            if (connection):
+            if(connection):
                 cursor.close()
                 connection.close()
                 print("PostgreSQL connection is closed")
@@ -70,7 +68,7 @@ class CoinCryptData:
             )
 
             cursor = connection.cursor()
-            cursor.execute("select asset_id from all_crypt")
+            cursor.execute("select asset_id from at_all_currencies")
             count = cursor.rowcount
 
             if count > 0:
@@ -97,7 +95,7 @@ class CoinCryptData:
                         asset.price_usd,
                     ))
 
-                insert = "INSERT INTO public.all_crypt (asset_id, name, type_is_crypto, data_start, data_end, data_quote_start, " \
+                insert = "INSERT INTO public.at_all_currencies (asset_id, name, type_is_crypto, data_start, data_end, data_quote_start, " \
                           "data_quote_end, data_orderbook_start," \
                           " data_orderbook_end, data_symbols_count, volume_1hrs_usd, volume_1day_usd, " \
                           "volume_1mth_usd, price_usd) VALUES (%s, %s, %s, %s, %s," \
@@ -108,7 +106,7 @@ class CoinCryptData:
                 cursor.executemany(insert, cointAssetsParam)
                 connection.commit()
                 print("======done ====")
-                return cursor.execute("select asset_id from all_crypt");
+                return cursor.execute("select asset_id from at_all_currencies");
 
         except (Exception, psycopg2.Error) as error:
             print("Error while connecting to PostgreSQL", error)
@@ -120,5 +118,5 @@ class CoinCryptData:
                 connection.close()
                 print("PostgreSQL connection is closed")
 
-p= CoinCryptData()
-p.getallcrypt()
+#p= CoinCryptData()
+#p.getallcrypt()
