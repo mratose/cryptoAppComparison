@@ -22,18 +22,38 @@ The project consumes data using 2 APIs. One API to get all assets and another to
 - The goal is to store the historical information of 4 cryptocurrency in a postgres db and view the history on a web app using chart js.
 - This Project gets historical information of 4 crytocurrencies.
 - An API to get the historical information of each base cryptocurrency requires a quote currency to get all information for that base currency.
-- Another API would be consumed for this purpose to get all the currencies that exist which will be used as the quote currency in the historical API.
+``` https://rest.coinapi.io//v1/ohlcv/{asset_id_base}/{asset_id_quote}/history?period_id={period_id}&time_start={time_start}&time_end={time_end}&limit={limit}&include_empty_items={include_empty_items} ```
+
+
+- Another API would be consumed for this purpose to get all the currencies ``` coinCryptData.getallcrypt() ```that exist which will be used as the quote currency in the historical API.
+API to get all currencies
+``` 'https://rest.coinapi.io/v1/assets' ```
 
 - The historic API requires the base currency, quote currency, time_period, and time_start paramters
 
 The steps:
 - Get all Currencies by consuming the all assets API and save in a table on the database
 - Iterate each one of the currencies gotten in  one above as the quote currency against the first base currency e.g BTC
+
+``` 
+crypto = ['BTC', 'ETH', 'XRP', 'LTC']
+
+    for currency in crypto:
+        base = currency
+
+        cryptsCursor = coinCryptData.getallcrypt() 
+        for crypt in cryptsCursor:
+            quote = crypt[0]
+            resp = coinRestService.getCoin(base, quote)
+            coinCryptData.addcoinhistory(resp, base, quote)
+
+```
+
 - Historic API is then consumed using the parameters : Base currency e.g BTC and iterates against each of the currencies gotten from API 
 - Information gotten from 3 above is inserted into the database
 
 Display the data in database 
-- Each crytocurrency information will be displayed after clicking a drop down containing the 4 currenies. To achieve this a class returns this information from the database as json to js.
+- Each crytocurrency information will be displayed after clicking a drop down containing the 4 currenies. To achieve this, a class returns this information from the database as json to chart js.
 - On change on drop down a method is called passing the selected item in drop down to datbase to fetch historical information in json format which is displayed using chart js
 
 
