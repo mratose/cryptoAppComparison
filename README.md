@@ -63,28 +63,38 @@ Display the data from database
 
 
  ## Data
-   This module consists of all the classes that stores information on historical data, and all currencies(Assets), also retrieves           information to populate drop down as well as information to populate chart.
-   - CoinCryptChartData
+   This module consists of all the classes that stores information on historical data, and all currencies(Assets), also retrieves           information to populate drop down as well as information to populate chart. 
+      - CoinCryptChartData
    - CoinCryptData
+   
+   - To be populate chart a view was created on the database 
+   
+   `` select asset_id, name, data_start, data_end, price_usd,time_period_end, price_open, 
+                                  price_high, price_low, price_close, volume_traded, trades_count, quotes 
+                                  from avw_chart_details 
+                                  where asset_id = 'BTC'
+`` 
+ This view is used within CoinCryptChartData
+
    
  ## Models
 - CoinAsset: This class represents the structure of response of the ```getallcrypt``` service
 
 - CoinHistorical: This class represents the structure of response of the gethistorical service.
 
-  ## Service
-    This handles the API calls. 
+ ## Service
+  This handles the API calls. 
     - CoinRestService calls the 2 APIs and returns a response.
-    -CoinService stores the 4 cryptocurrency for comparison in a list and iterates along with a call to all assets API as parameters to the history API.
+    -CoinService stores the 4 crptocurrency for comparison in a list and iterates along with a call to all assets API as parameters to   the history API.
     
 
-  ##Template
+ ##Template
   This includes my HTML file for the web app to view chart
 
 
 
-## Utility
-Contains a constant class that holds Constants such as APIKey, Database parameters, APIPath which do not change.
+ ## Utility
+COntains a constant class that holds Constansts such as APIKey, Database parameters, APIPath which do not change.
 
 
 
