@@ -89,12 +89,16 @@ Display the data from database
     
 
  ##Template
-  This includes my HTML file for the web app to view chart
+  This includes my HTML file(home.htl and chart.html) for the web app to view chart
+  
 
 
 
  ## Utility
 COntains a constant class that holds Constansts such as APIKey, Database parameters, APIPath which do not change.
+
+ ## app.py
+ This is my flask web application 
 
 
 
