@@ -53,9 +53,48 @@ crypto = ['BTC', 'ETH', 'XRP', 'LTC']
 - Historic API is then consumed using the parameters : Base currency e.g BTC and iterates against each of the currencies gotten from API 
 - Information gotten from 3 above is inserted into the database
 
-Display the data in database 
+Display the data from database 
 - Each crytocurrency information will be displayed after clicking a drop down containing the 4 currenies. To achieve this, a class returns this information from the database as json to chart js.
-- On change on drop down a method is called passing the selected item in drop down to datbase to fetch historical information in json format which is displayed using chart js
+- On change on drop down a method is called passing the selected item in drop down to datbase to fetch historical information in json format which is displayed using chart js.
+
+
+
+# Class Details
+
+
+  ## Data
+    This module consists of all the classes that stores information on historical data, all currencies(Assets), also retrieves information to populate drop down as well as information to populate chart.
+   - CoinCryptChartData
+   - CoinCryptData
+   
+ ## Models
+- CoinAsset: This class represents the structure of response of the ```getallcrypt``` service
+
+- CoinHistorical: This class represents the structure of response of the gethistorical service.
+
+  ## Service
+    This handles the API calls. 
+    - CoinRestService calls the 2 APIs and returns a response.
+    -CoinService stores the 4 crptocurrency for comparison in a list and iterates along with a call to all assets API as parameters to the history API.
+    
+
+  ##Template
+  This includes my HTML file for the web app to view chart
+
+
+
+## Utility
+COntains a constant class that holds Constansts such as APIKey, Database parameters, APIPath which do not change.
+
+
+
+
+
+
+
+
+
+
 
 
 
