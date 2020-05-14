@@ -10,13 +10,11 @@ def get_drop_down_data():
                                       port=Constant.port,
                                       database=Constant.database)
         cursor = connection.cursor()
-        #postgreSQL_select_Query = "select price_open, price_high,price_low,price_close,volume_traded" \
-        #                          ",trades_count from public.coin_btc"
-
-        select_query = "select asset_id from public.at_all_currencies where asset_id in ('BTC', 'ETH', 'XRP', 'LTC') "
+        select_query = "select asset_id from public.at_all_currencies " \
+                       "where asset_id in ('BTC', 'ETH', 'XRP', 'LTC') "
 
         cursor.execute(select_query)
-        print("Selecting çrytocurrency from all_assets table using cursor.fetchall")
+        print("Selecting çrytocurrency from all_assets")
 
         row = cursor.fetchall()
         all_assets = []
@@ -43,10 +41,13 @@ def get_chart_details(base_crypto):
                                       database=Constant.database)
         cursor = connection.cursor()
 
-        select_query = "select asset_id, name, data_start, data_end, price_usd,time_period_end, price_open, "\
-                                  "price_high, price_low, price_close, volume_traded, trades_count, quotes " \
-                                  "from avw_chart_details " \
-                                  "where asset_id = %s "
+        select_query = "select asset_id, name, data_start,data_end" \
+                       ", price_usd," \
+                       "time_period_end, price_open," \
+                       "price_high, price_low, price_close, volume_traded" \
+                       ", trades_count, quotes " \
+                       "from avw_chart_details " \
+                       "where asset_id = %s "
 
         cursor.execute(select_query, (base_crypto,))
         print("Selecting chart details using cursor.fetchall")

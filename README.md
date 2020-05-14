@@ -75,7 +75,7 @@ Display the data from database
   ## Service
     This handles the API calls. 
     - CoinRestService calls the 2 APIs and returns a response.
-    -CoinService stores the 4 crptocurrency for comparison in a list and iterates along with a call to all assets API as parameters to the history API.
+    -CoinService stores the 4 cryptocurrency for comparison in a list and iterates along with a call to all assets API as parameters to the history API.
     
 
   ##Template
@@ -84,7 +84,7 @@ Display the data from database
 
 
 ## Utility
-COntains a constant class that holds Constansts such as APIKey, Database parameters, APIPath which do not change.
+Contains a constant class that holds Constants such as APIKey, Database parameters, APIPath which do not change.
 
 
 

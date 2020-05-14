@@ -20,8 +20,11 @@ class CoinCryptData:
             cointIemParams = []
 
             query = "INSERT INTO at_ohlcv_history (" \
-                    "time_period_start, time_period_end, time_open, time_close,price_open," \
-                    "price_high,price_low,price_close,volume_traded,trades_count,base,quotes) " \
+                    "time_period_start, time_period_end," \
+                    "time_open, time_close,price_open," \
+                    "price_high,price_low,price_close," \
+                    "volume_traded,trades_count" \
+                    ",base,quotes) " \
                     "VALUES (%s, %s, %s,%s, %s, %s,%s,%s, %s, %s, %s, %s)"
 
             for coinItem in resp.json():
@@ -41,7 +44,6 @@ class CoinCryptData:
                         quote
                     )
                 )
-
 
             if len(cointIemParams) > 0:
                 cursor.executemany(query, cointIemParams)
@@ -75,7 +77,7 @@ class CoinCryptData:
                 return cursor.fetchall()
             else:
                 coinRestService = CoinRestService()
-                cointAssests = coinRestService.getAssets()
+                cointAssests = coinRestService.getassets()
                 cointAssetsParam = []
                 for asset in cointAssests:
                     cointAssetsParam.append((
@@ -95,18 +97,23 @@ class CoinCryptData:
                         asset.price_usd,
                     ))
 
-                insert = "INSERT INTO public.at_all_currencies (asset_id, name, type_is_crypto, data_start, data_end, data_quote_start, " \
-                          "data_quote_end, data_orderbook_start," \
-                          " data_orderbook_end, data_symbols_count, volume_1hrs_usd, volume_1day_usd, " \
-                          "volume_1mth_usd, price_usd) VALUES (%s, %s, %s, %s, %s," \
-                          " %s, %s, %s," \
-                          " %s, %s, %s, %s, %s, %s)"
+                insert = "INSERT INTO public.at_all_currencies " \
+                         "(asset_id, name, type_is_crypto, data_start" \
+                         ", data_end, data_quote_start, " \
+                         "data_quote_end,"\
+                         "data_orderbook_start,"\
+                         "data_orderbook_end, data_symbols_count" \
+                         ", volume_1hrs_usd, volume_1day_usd, " \
+                         "volume_1mth_usd, price_usd)"\
+                         "VALUES (%s, %s, %s, %s, %s," \
+                         " %s, %s, %s," \
+                         " %s, %s, %s, %s, %s, %s)"
 
                 print("======starting======")
                 cursor.executemany(insert, cointAssetsParam)
                 connection.commit()
                 print("======done ====")
-                return cursor.execute("select asset_id from at_all_currencies");
+                return cursor.execute("select asset_id from at_all_currencies")
 
         except (Exception, psycopg2.Error) as error:
             print("Error while connecting to PostgreSQL", error)
@@ -117,6 +124,3 @@ class CoinCryptData:
                 cursor.close()
                 connection.close()
                 print("PostgreSQL connection is closed")
-
-#p= CoinCryptData()
-#p.getallcrypt()

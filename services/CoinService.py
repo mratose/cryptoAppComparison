@@ -15,7 +15,7 @@ try:
         cryptsCursor = coinCryptData.getallcrypt()
         for crypt in cryptsCursor:
             quote = crypt[0]
-            resp = coinRestService.getCoin(base, quote)
+            resp = coinRestService.gethistory(base, quote)
             coinCryptData.addcoinhistory(resp, base, quote)
 
 except (Exception, psycopg2.Error) as error:

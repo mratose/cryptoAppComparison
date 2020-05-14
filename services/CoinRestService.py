@@ -6,9 +6,8 @@ import utility.Constant as Constant
 
 
 class CoinRestService:
-    def getCoin(self, base, quote):
+    def gethistory(self, base, quote):
 
-        #url = f'https://rest.coinapi.io/v1/ohlcv/{base}/{quote}/history?period_id=2YRS&time_start=2016-01-01T00:00:00'
         url = Constant.historicalAPI+'/{}/{}/latest?period_id=1HRS&time_start=2016-01-01T00:00:00'.format(base, quote)
         resp = requests.get(url,
                             headers=
@@ -28,7 +27,7 @@ class CoinRestService:
             # print("got values  "+ resp.json())
             return resp
 
-    def getAssets(self):
+    def getassets(self):
         resp = requests.get(Constant.allAssetsAPI,
                     headers =
                         {
