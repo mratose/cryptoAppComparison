@@ -15,7 +15,6 @@ def home():
     drop_down_data = CoinCryptChartData.get_drop_down_data()
     if request.method == 'POST':
         bases = request.form['select_comp']
-        print(bases)
 
         get_chart_details(bases)
         return redirect(url_for('get_chart_details', base=bases))
@@ -26,17 +25,21 @@ def home():
 def get_chart_details(base):
 
     get_chart_items = CoinCryptChartData.get_chart_details(base)
-    print(get_chart_items)
+
     values = []
     labels = []
-    legend = 'Monthly Data'
+    values2 = []
+    legend = base + ' Price Close Data'
     for label in list(get_chart_items):
         labels.append(label[3])
 
     for value in list(get_chart_items):
         values.append(value[4])
 
-    return render_template('chart.html', values=values, labels=labels, legend=legend)
+    for value2 in list(get_chart_items):
+        values2.append(value2[9])
+
+    return render_template('chart.html', values=values, labels=labels, legend=legend, values2=values2)
 
 
 if __name__ == '__main__':

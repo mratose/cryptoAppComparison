@@ -1,12 +1,11 @@
 <head>
   <meta charset="utf-8" />
-  <title>Chart.js Example</title>
+  <title>Chart.js </title>
   <!-- import plugin script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 </head>
-The chart is then defined as a HTML5 canvas element:
 
-<h1>Simple Line Chart</h1>
+<h1>OHLCV chart.</h1>
 <!-- bar chart canvas element -->
 <canvas id="myChart" width="600" height="400"></canvas>
 <p id="caption">The chart is displaying a simple line chart.</p>
@@ -41,9 +40,10 @@ var chartData = {
       pointHoverBorderWidth: 2,
       pointRadius: 1,
       pointHitRadius: 10,
-      data : [{% for item in values %}
+      data : [{% for item in values2 %}
                 {{item}},
               {% endfor %}],
+
       spanGaps: false
   }]
 }
