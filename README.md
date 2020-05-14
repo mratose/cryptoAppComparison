@@ -62,8 +62,8 @@ Display the data from database
 # Class Details
 
 
-  ## Data
-    This module consists of all the classes that stores information on historical data, all currencies(Assets), also retrieves information to populate drop down as well as information to populate chart.
+ ## Data
+    This module consists of all the classes that stores information on historical data, and all currencies(Assets), also retrieves           information to populate drop down as well as information to populate chart.
    - CoinCryptChartData
    - CoinCryptData
    
