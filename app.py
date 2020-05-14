@@ -1,4 +1,4 @@
-from flask import Flask, Markup, render_template
+from flask import Flask, Markup, render_template, request
 import data.CoinCryptChartData as CoinCryptChartData
 import json
 
@@ -8,31 +8,35 @@ from flask import redirect, url_for
 app = Flask(__name__)
 
 
-@app.route("/home", methods=["GET"])
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 def home():
-    return render_template("home.html")
-
-
-@app.route("/home/crpt", methods=["POST"])
-def drop_down_crypt():
 
     drop_down_data = CoinCryptChartData.get_drop_down_data()
+    if request.method == 'POST':
+        bases = request.form['select_comp']
+        print(bases)
 
-    json_drop_down = json.dumps(drop_down_data)
+        get_chart_details(bases)
+        return redirect(url_for('get_chart_details', base=bases))
+    return render_template('home.html', objList=drop_down_data)
 
-    return json_drop_down
-    #return json_drop_down
 
-
-@app.route("/home/chart", methods=["GET"])
+@app.route("/home/chart/<base>", methods=["GET", "POST"])
 def get_chart_details(base):
 
     get_chart_items = CoinCryptChartData.get_chart_details(base)
+    print(get_chart_items)
+    values = []
+    labels = []
+    legend = 'Monthly Data'
+    for label in list(get_chart_items):
+        labels.append(label[3])
 
-    json_chart_items = json.dumps(get_chart_items)
+    for value in list(get_chart_items):
+        values.append(value[4])
 
-    return json_chart_items
-
+    return render_template('chart.html', values=values, labels=labels, legend=legend)
 
 
 if __name__ == '__main__':

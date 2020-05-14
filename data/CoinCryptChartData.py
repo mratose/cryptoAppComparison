@@ -54,8 +54,9 @@ def get_chart_details(base_crypto):
 
         row = cursor.fetchall()
         all_assets = []
-        for rows in row:
-            all_assets.append(rows[0])
+        for asset in row:
+            print(asset)
+            all_assets.append(asset[:])
         return all_assets
     except (Exception, psycopg2.Error) as error:
         print("Error while fetching data from PostgreSQL", error)
