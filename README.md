@@ -68,11 +68,13 @@ Display the data from database
    - CoinCryptData
    
    - To be populate chart a view was created on the database 
+   
    `` select asset_id, name, data_start, data_end, price_usd,time_period_end, price_open, 
                                   price_high, price_low, price_close, volume_traded, trades_count, quotes 
                                   from avw_chart_details 
                                   where asset_id = 'BTC'
-`` This view is used within CoinCryptChartData
+`` 
+ This view is used within CoinCryptChartData
 
    
  ## Models
