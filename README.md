@@ -26,7 +26,8 @@ The project consumes data using 2 APIs. One API to get all assets and another to
 
 
 - Another API would be consumed for this purpose to get all the currencies ``` coinCryptData.getallcrypt() ```that exist which will be used as the quote currency in the historical API.
-API to get all currencies
+
+- API to get all currencies
 ``` 'https://rest.coinapi.io/v1/assets' ```
 
 - The historic API requires the base currency, quote currency, time_period, and time_start paramters
