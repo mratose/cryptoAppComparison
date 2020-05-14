@@ -18,6 +18,5 @@ try:
             resp = coinRestService.getCoin(base, quote)
             coinCryptData.addcoinhistory(resp, base, quote)
 
-
 except (Exception, psycopg2.Error) as error:
     print("Error while connecting to PostgreSQL", error)
