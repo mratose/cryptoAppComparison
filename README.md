@@ -85,15 +85,12 @@ Display the data from database
  ## Service
   This handles the API calls. 
     - CoinRestService calls the 2 APIs and returns a response.
-    -CoinService stores the 4 crptocurrency for comparison in a list and iterates along with a call to all assets API as parameters to   the history API.
+    -CoinService stores the 4 crptocurrency for comparison in a list and iterates along with a call to all assets API as parameters to        the history API. This class is the entry point to get historical data.
     
 
  ##Template
   This includes my HTML file(home.htl and chart.html) for the web app to view chart
   
-
-
-
  ## Utility
 COntains a constant class that holds Constansts such as APIKey, Database parameters, APIPath which do not change.
 
