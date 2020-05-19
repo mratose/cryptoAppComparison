@@ -10,12 +10,53 @@ The project consumes data using 2 APIs. One API to get all assets and another to
 
 
 
+
 # Getting Started
 
 - Clone the repo and run cryptoAppComparison
 - Create an API key from [coinAPI.io](https://www.coinapi.io/pricing?apikey). 
 - Edit Constant Class in the utility folder and replace the APIKey.
 - I have hosted a POSTGRES DB on [AWS]( https://aws.amazon.com/). Database parameters can be found in Constant Class in the utility folder.
+- Table Structure
+```
+CREATE TABLE at_ohlcv_history
+
+(
+
+time_period_start DATE
+,time_period_end DATE
+,time_open DATE
+,time_close DATE
+,price_open DECIMAL
+,price_high DECIMAL
+,price_low DECIMAL
+,price_close DECIMAL
+,volume_traded DECIMAL
+,trades_count integer
+,base TEXT
+,quotes TEXT
+
+);
+
+CREATE TABLE at_all_currencies
+
+(
+asset_id TEXT
+,name TEXT
+,type_is_crypto INT
+,data_start DATE
+,data_end DATE
+,data_quote_start TIMESTAMP
+,data_quote_end TIMESTAMP
+,data_orderbook_start TIMESTAMP
+,data_orderbook_end TIMESTAMP
+,data_symbols_count integer
+,volume_1hrs_usd decimal
+,volume_1day_usd decimal
+,volume_1mth_usd decimal
+,price_usd decimal
+);
+```
 
 
 # Project Flow
@@ -72,7 +113,7 @@ Display the data from database
                                   from avw_chart_details 
                                   where asset_id = 'BTC'
 `` 
- This view is used within CoinCryptChartData
+ This view is used within CoinCryptChartData. This view accepts the base currency. All 4 cryptocurrency are in a currency pair with 'BUL'
 
    
  ## Models
@@ -94,6 +135,7 @@ COntains a constant class that holds Constansts such as APIKey, Database paramet
 
  ## app.py
  This is my flask web application to display OHLCV chart
+
 
 
 
