@@ -19,7 +19,7 @@ class CoinCryptData:
             cursor = connection.cursor()
             cointIemParams = []
 
-            query = "INSERT INTO at_ohlcv_history (" \
+            query = "INSERT INTO ohlcv_history (" \
                     "time_period_start, time_period_end," \
                     "time_open, time_close,price_open," \
                     "price_high,price_low,price_close," \
@@ -27,7 +27,7 @@ class CoinCryptData:
                     ",base,quotes) " \
                     "VALUES (%s, %s, %s,%s, %s, %s,%s,%s, %s, %s, %s, %s)"
 
-            for coinItem in resp.json():
+            for coinItem in resp:
                 cointIemParams.append(
                     (
                         coinItem['time_period_start'],
@@ -70,7 +70,7 @@ class CoinCryptData:
             )
 
             cursor = connection.cursor()
-            cursor.execute("select asset_id from at_all_currencies")
+            cursor.execute("select asset_id from all_assets")
             count = cursor.rowcount
 
             if count > 0:
@@ -97,7 +97,7 @@ class CoinCryptData:
                         asset.price_usd,
                     ))
 
-                insert = "INSERT INTO public.at_all_currencies " \
+                insert = "INSERT INTO public.all_assets " \
                          "(asset_id, name, type_is_crypto, data_start" \
                          ", data_end, data_quote_start, " \
                          "data_quote_end,"\
@@ -113,7 +113,7 @@ class CoinCryptData:
                 cursor.executemany(insert, cointAssetsParam)
                 connection.commit()
                 print("======done ====")
-                return cursor.execute("select asset_id from at_all_currencies")
+                return cursor.execute("select asset_id from all_assets")
 
         except (Exception, psycopg2.Error) as error:
             print("Error while connecting to PostgreSQL", error)

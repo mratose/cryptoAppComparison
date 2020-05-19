@@ -3,9 +3,31 @@
 <html lang="en">
 
 <head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NM3L6KV');</script>
+<!-- End Google Tag Manager -->
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167033385-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-167033385-1');
+</script>
+
+
+
      <meta charset="utf-8" />
   <title>Chart.js Example</title>
   <!-- import plugin script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
@@ -16,6 +38,17 @@
     </head>
 
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NM3L6KV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KD6XTQC"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
 <section id="title">
         <div class="container-fluid">
           <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top">
@@ -30,7 +63,7 @@
                   <form action="{{ url_for('home') }}" method="post">
         <div class="col-sm-3">
             <label for="select_comp">Items:</label>
-            <select name="select_comp" class="form-control" id="select_comp">
+            <select name="select_comp" class="form-control" onchange="this.form.submit()" id="select_comp">
 
             {% for item in objList %}
 
@@ -40,7 +73,7 @@
 
             </select>
           </div>
-            <button type="submit" class="btn btn-default">Go</button>
+<!--            <button type="submit" class="btn btn-default">Go</button>-->
         </form>
                 </li>
              </ul>
@@ -51,12 +84,178 @@
         {%block content%}
 
         {%endblock%}
+    <canvas id="myChart" width="600" height="400"></canvas>
+<p id="caption">The chart is displaying a simple line chart.</p>
 
 
 </body>
 
 </html>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 
 
+<script>
+
+// Global parameters:
+// do not resize the chart canvas when its container does (keep at 600x400px)
+Chart.defaults.global.responsive = false;
+
+// define the chart data
+var chartData = {
+  labels : [{% for item in labels %}
+             "{{item}}",
+            {% endfor %}],
+  datasets : [{
+            label: "price_low",
+      fill: false,
+      lineTension: 0.1,
+      backgroundColor: "rgba(225,0,0,0.4)",
+      borderColor: "red", // The main line color
+      borderCapStyle: 'square',
+      borderDash: [], // try [5, 15] for instance
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      pointBorderColor: "black",
+      pointBackgroundColor: "white",
+      pointBorderWidth: 1,
+      pointHoverRadius: 8,
+      pointHoverBackgroundColor: "yellow",
+      pointHoverBorderColor: "brown",
+      pointHoverBorderWidth: 2,
+      pointRadius: 4,
+      pointHitRadius: 10,
+      data : [{% for item in price_lows %}
+                {{item}},
+              {% endfor %}],
+
+      spanGaps: true
+  },
+
+  {
+      label: "price_close",
+      fill: false,
+      lineTension: 0.1,
+      backgroundColor: "rgba(167,20,0,0.4)",
+      borderColor: "blue",
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      pointBorderColor: "white",
+      pointBackgroundColor: "black",
+      pointBorderWidth: 1,
+      pointHoverRadius: 8,
+      pointHoverBackgroundColor: "brown",
+      pointHoverBorderColor: "yellow",
+      pointHoverBorderWidth: 2,
+      pointRadius: 4,
+      pointHitRadius: 10,
+      data : [{% for item in price_closes %}
+                {{item}},
+              {% endfor %}],
+
+      spanGaps: false,
+  },
+
+  {
+      label: "price_open",
+      fill: false,
+      lineTension: 0.1,
+      backgroundColor: "rgba(167,105,0,0.4)",
+      borderColor: "green",
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      pointBorderColor: "white",
+      pointBackgroundColor: "black",
+      pointBorderWidth: 1,
+      pointHoverRadius: 8,
+      pointHoverBackgroundColor: "yellow",
+      pointHoverBorderColor: "red",
+      pointHoverBorderWidth: 2,
+      pointRadius: 4,
+      pointHitRadius: 10,
+      data : [{% for item in price_opens %}
+                {{item}},
+              {% endfor %}],
+
+      spanGaps: false,
+  },
+
+  {
+      label: "price_high",
+      fill: false,
+      lineTension: 0.1,
+      backgroundColor: "rgba(167,105,0,0.4)",
+      borderColor: "rgb(167, 105, 0)",
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      pointBorderColor: "white",
+      pointBackgroundColor: "black",
+      pointBorderWidth: 1,
+      pointHoverRadius: 8,
+      pointHoverBackgroundColor: "blue",
+      pointHoverBorderColor: "green",
+      pointHoverBorderWidth: 2,
+      pointRadius: 4,
+      pointHitRadius: 10,
+      data : [{% for item in price_highs %}
+                {{item}},
+              {% endfor %}],
+
+      spanGaps: false,
+  }
+
+  ]
+};
+
+var options = {
+  scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                },
+                scaleLabel: {
+                     display: true,
+                     labelString: 'Price',
+                     fontSize: 20
+                  }
+            }]
+        }
+};
+
+// get chart canvas
+var ctx = document.getElementById("myChart").getContext("2d");
+
+// create the chart using the chart canvas
+var myChart = new Chart(ctx, {
+  type: 'line',
+  data: chartData,
+  options: options
+});
+</script>
+
+
+<script>
+  (function() {
+
+    // Change the CSS selector in the parenthesis to match your select menu
+    var selectMenu = document.getElementById("select_comp");
+
+    var callback = function(e) {
+      var selectedOption = e.target.options[e.target.selectedIndex];
+      window.dataLayer.push({
+        event: 'selectionMade',
+        selectedElement: selectedOption
+      });
+    };
+
+    selectMenu.addEventListener('change', callback, true);
+  })();
+</script>
+﻿
 

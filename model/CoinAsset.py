@@ -20,3 +20,5 @@ class CoinAsset:
         self.volume_1day_usd = volume_1day_usd
         self.volume_1mth_usd = volume_1mth_usd
         self.price_usd = price_usd
+
+
