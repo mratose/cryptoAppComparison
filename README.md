@@ -6,7 +6,7 @@ timeseries data from January 01, 2016 till date of 4 crytocurrencies :
 3. XRP
 4. LTC
 
-The project consumes data using 2 APIs. One API to get all assets and another to get the historical information.
+The project consumes data using 2 APIs. One API to get all assets and another to get the historical information. However due to API daily limit only data for BTC was consumed being the first in the iteration.
 
 
 
@@ -39,14 +39,12 @@ The steps:
 ``` 
 crypto = ['BTC', 'ETH', 'XRP', 'LTC']
 
-    for currency in crypto:
-        base = currency
+    while time_start < today:
 
-        cryptsCursor = coinCryptData.getallcrypt() 
-        for crypt in cryptsCursor:
-            quote = crypt[0]
-            resp = coinRestService.getCoin(base, quote)
-            coinCryptData.addcoinhistory(resp, base, quote)
+        time_start = time_start.isoformat()
+        for currency in crypto:
+            base = currency
+            await run_history_service(base, time_start)
 
 ```
 
@@ -85,7 +83,7 @@ Display the data from database
  ## Service
   This handles the API calls. 
     - CoinRestService calls the 2 APIs and returns a response.
-    -CoinService stores the 4 crptocurrency for comparison in a list and iterates along with a call to all assets API as parameters to        the history API. This class is the entry point to get historical data.
+    -CoinService stores the 4 crptocurrency for comparison in a list and iterates along with a call to all assets API as parameters to        the history API. This class is the entry point to get historical data. 
     
 
  ##Template
@@ -95,7 +93,7 @@ Display the data from database
 COntains a constant class that holds Constansts such as APIKey, Database parameters, APIPath which do not change.
 
  ## app.py
- This is my flask web application 
+ This is my flask web application to display OHLCV chart
 
 
 
